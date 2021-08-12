@@ -6,22 +6,29 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.sql.DataSource;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    DataSource dataSource;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("owner").password(passwordEncoder.encode("owner")).roles("OWNER")
-                .and()
-                .withUser("admin").password(passwordEncoder.encode("admin")).roles("ADMIN")
-                .and()
-                .withUser("user").password(passwordEncoder.encode("user")).roles("USER");
+        auth.jdbcAuthentication()
+                .dataSource(dataSource)
+                .withDefaultSchema()
+                .withUser(User.withUsername("owner").password(passwordEncoder.encode("owner")).roles("OWNER"))
+                .withUser(User.withUsername("admin").password(passwordEncoder.encode("admin")).roles("ADMIN"))
+                .withUser(User.withUsername("user").password(passwordEncoder.encode("user")).roles("USER"))
+
         ;
     }
 
@@ -33,12 +40,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
+                .headers().frameOptions().sameOrigin().and()
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/admin/**").hasAnyRole("OWNER", "ADMIN")
                 .antMatchers("/user/**").authenticated()
                 .antMatchers("/**").permitAll()
-                .and().formLogin();
+                .and().formLogin()
+        ;
 
     }
 }
