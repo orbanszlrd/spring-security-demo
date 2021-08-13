@@ -11,7 +11,8 @@
 * [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
 * [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
 * [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
-
+* [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
 
 ### Tutorials
 * [Spring Security Basics](https://www.youtube.com/playlist?list=PLqq-6Pq4lTTYTEooakHchTGglSvkZAjnE)
+* [Spring Security (Amigoscode)](https://www.youtube.com/watch?v=her_7pa0vrg&ab_channel=Amigoscode)

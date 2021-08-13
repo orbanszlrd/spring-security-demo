@@ -42,7 +42,7 @@ objectclass: inetOrgPerson
 cn: Ben Alex
 sn: Alex
 uid: ben
-userPassword: $2a$10$c6bSeWPhg06xB1lvmaWNNe4NROmZiSpYhlocU/98HNr2MhIOiSt36
+userPassword: $2a$10$U5ot/8aRaQ1cTGuKcuNzbuRpskNegsexTMbfinkCGqeMK4gx/C9Ti
 
 dn: uid=bob,ou=people,dc=springframework,dc=org
 objectclass: top
@@ -52,7 +52,7 @@ objectclass: inetOrgPerson
 cn: Bob Hamilton
 sn: Hamilton
 uid: bob
-userPassword: bobspassword
+userPassword: $2a$10$Q5eZmoPv/S1/Dg3lPw8QBuxuTq1a5QInfDl.g9AQPP/qDUQziVqEK
 
 dn: uid=joe,ou=otherpeople,dc=springframework,dc=org
 objectclass: top
