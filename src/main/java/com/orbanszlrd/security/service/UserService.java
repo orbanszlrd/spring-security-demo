@@ -1,6 +1,6 @@
 package com.orbanszlrd.security.service;
 
-import com.orbanszlrd.security.AppUser;
+import com.orbanszlrd.security.model.AppUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

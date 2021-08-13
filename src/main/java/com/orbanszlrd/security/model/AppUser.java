@@ -1,4 +1,4 @@
-package com.orbanszlrd.security;
+package com.orbanszlrd.security.model;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
