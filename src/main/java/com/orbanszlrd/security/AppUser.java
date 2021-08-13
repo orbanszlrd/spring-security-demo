@@ -1,5 +1,6 @@
 package com.orbanszlrd.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,22 +10,37 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Collection;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class AppUser implements UserDetails {
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder;
+
+    private final String username;
+    private final String password;
+    private final boolean enabled;
+    private final List<GrantedAuthority> authorities;
+
+    public AppUser(String username) {
+        this.username = username;
+
+        this.passwordEncoder  = new BCryptPasswordEncoder();
+        this.password = passwordEncoder.encode("owner");
+        this.enabled = true;
+        this.authorities = List.of(new SimpleGrantedAuthority("ROLE_OWNER"));
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ADMIN"));
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        return passwordEncoder.encode("admin");
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return "admin";
+        return username;
     }
 
     @Override
@@ -44,6 +60,6 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }
