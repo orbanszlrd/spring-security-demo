@@ -5,3 +5,4 @@ insert into users (username, password, enabled) values ('user', '$2a$10$U5ot/8aR
 insert into authorities (username, authority) values ('owner', 'ROLE_OWNER');
 insert into authorities (username, authority) values ('admin', 'ROLE_ADMIN');
 insert into authorities (username, authority) values ('user', 'ROLE_USER');
+

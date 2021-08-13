@@ -4,28 +4,22 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collection;
 import java.util.List;
 
 @RequiredArgsConstructor
 public class AppUser implements UserDetails {
-    private final PasswordEncoder passwordEncoder;
-
     private final String username;
     private final String password;
     private final boolean enabled;
     private final List<GrantedAuthority> authorities;
 
-    public AppUser(String username) {
-        this.username = username;
-
-        this.passwordEncoder  = new BCryptPasswordEncoder();
-        this.password = passwordEncoder.encode("owner");
-        this.enabled = true;
-        this.authorities = List.of(new SimpleGrantedAuthority("ROLE_OWNER"));
+    public AppUser(User user) {
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.enabled =  user.isEnabled();
+        this.authorities = List.of(new SimpleGrantedAuthority(user.getRole().name()));
     }
 
     @Override

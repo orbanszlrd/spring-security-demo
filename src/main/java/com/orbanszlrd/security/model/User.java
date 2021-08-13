@@ -26,4 +26,7 @@ public class User {
     private String password;
 
     private boolean enabled;
+
+    @Column(nullable = false)
+    private Role role;
 }
