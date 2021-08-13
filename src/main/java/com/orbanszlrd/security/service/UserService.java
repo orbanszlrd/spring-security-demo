@@ -1,6 +1,6 @@
 package com.orbanszlrd.security.service;
 
-import com.orbanszlrd.security.model.AppUser;
+import com.orbanszlrd.security.model.AppUserDetails;
 import com.orbanszlrd.security.model.User;
 import com.orbanszlrd.security.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +20,6 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> userOptional = userRepository.findByUsername(username);
         if (userOptional.isEmpty()) throw new UsernameNotFoundException(username);
-        AppUser appUser = new AppUser(userOptional.get());
-
-        return appUser;
+        return new AppUserDetails(userOptional.get());
     }
 }

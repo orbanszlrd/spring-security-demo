@@ -9,13 +9,13 @@ import java.util.Collection;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class AppUser implements UserDetails {
+public class AppUserDetails implements UserDetails {
     private final String username;
     private final String password;
     private final boolean enabled;
     private final List<GrantedAuthority> authorities;
 
-    public AppUser(User user) {
+    public AppUserDetails(User user) {
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.enabled =  user.isEnabled();
