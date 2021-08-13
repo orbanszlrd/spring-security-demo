@@ -19,11 +19,20 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
 
+    private final JwtUtil jwtUtil;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> userOptional = userRepository.findByUsername(username);
 
-        log.info(new JwtUtil().generateToken(userOptional.map(AppUserDetails::new).get()));
+
+        UserDetails userDetails = userOptional.map(AppUserDetails::new).get();
+        String token = jwtUtil.generateToken(userOptional.map(AppUserDetails::new).get());
+
+        log.info(token);
+        log.info(jwtUtil.extractUsername(token));
+        log.info(jwtUtil.extractExpiration(token));
+        log.info(jwtUtil.validateToken(token, userDetails));
 
         return userOptional.map(AppUserDetails::new).orElseThrow(() -> new UsernameNotFoundException(username));
     }
